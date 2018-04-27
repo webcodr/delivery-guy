@@ -26,7 +26,7 @@ const getItemsJson = async () => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.body)
+    console.log('Response Body'. e.responseBody)
   }
 }
 
@@ -38,7 +38,7 @@ const getItemsText = async () => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.body)
+    console.log('Response Body'. e.responseBody)
   }
 }
 ~~~

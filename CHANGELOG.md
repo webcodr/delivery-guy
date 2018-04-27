@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+### Changes
+
+- Fixed example in readme file
+
 ## 2.0.0
 
 ### Breaking changes
