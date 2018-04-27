@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "standard",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "standard",
+    "prettier",
+    "promise",
+    "jest"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": false,
+        "bracketSpacing": true
+      }
+    ]
+  },
+  "env": {
+    "browser": true
+  }
+}
