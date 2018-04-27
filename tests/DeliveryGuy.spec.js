@@ -1,4 +1,4 @@
-import { deliver } from '../src/DeliveryGuy'
+import { deliver, deliverJson } from '../src/DeliveryGuy'
 import fetchMock from 'fetch-mock'
 import flushPromises from 'flush-promises'
 
@@ -10,9 +10,10 @@ describe('DevliveryGuy', () => {
       fetchMock.get('/foo', mockData)
 
       const response = await deliver('/foo')
+      const jsonBody = await response.json()
       flushPromises()
 
-      expect(response).toEqual(mockData)
+      expect(jsonBody).toEqual(mockData)
     })
 
     describe('errors', () => {
@@ -32,9 +33,22 @@ describe('DevliveryGuy', () => {
         }
       })
     })
+  })
 
-    afterEach(() => {
-      fetchMock.restore()
+  describe('deliverJson()', () => {
+    it('delivers a JSON response', async () => {
+      const mockData = { foo: 'bar' }
+
+      fetchMock.get('/foo', mockData)
+
+      const jsonBody = await deliverJson('/foo')
+      flushPromises()
+
+      expect(jsonBody).toEqual(mockData)
     })
+  })
+
+  afterEach(() => {
+    fetchMock.restore()
   })
 })

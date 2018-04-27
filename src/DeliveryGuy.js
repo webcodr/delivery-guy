@@ -1,11 +1,19 @@
 import ResponseError from './ResponseError'
 
-export const deliver = async (url, options) => {
+const makeDelivery = async (url, options) => {
   const response = await fetch(url, options)
 
   if (!response.ok) {
     throw new ResponseError(response)
   }
+
+  return response
+}
+
+export const deliver = makeDelivery
+
+export const deliverJson = async (url, options) => {
+  const response = await makeDelivery(url, options)
 
   return response.json()
 }
