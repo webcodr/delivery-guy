@@ -1,5 +1,15 @@
 {
+  "plugins": [
+    "fast-async"
+  ],
   "presets": [
-    "env"
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
   ]
 }

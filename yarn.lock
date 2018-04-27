@@ -110,6 +110,10 @@ acorn-dynamic-import@^3.0.0:
   dependencies:
     acorn "^5.0.0"
 
+acorn-es7-plugin@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/acorn-es7-plugin/-/acorn-es7-plugin-1.1.7.tgz#f2ee1f3228a90eead1245f9ab1922eb2e71d336b"
+
 acorn-globals@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/acorn-globals/-/acorn-globals-4.1.0.tgz#ab716025dbe17c54d3ef81d32ece2b2d99fe2538"
@@ -122,13 +126,13 @@ acorn-jsx@^3.0.0:
   dependencies:
     acorn "^3.0.4"
 
+acorn@>=2.5.2, acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
+
 acorn@^3.0.4:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
-
-acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
 
 ajv-keywords@^2.1.0:
   version "2.1.1"
@@ -2238,6 +2242,13 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
 
+fast-async@^6.3.6:
+  version "6.3.6"
+  resolved "https://registry.yarnpkg.com/fast-async/-/fast-async-6.3.6.tgz#016f972bd77e3f2951b13a85e75f3cb75c835e72"
+  dependencies:
+    nodent-compiler "^3.2.2"
+    nodent-runtime ">=3.2.1"
+
 fast-deep-equal@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz#c053477817c86b51daa853c81e059b733d023614"
@@ -4229,6 +4240,23 @@ node-pre-gyp@^0.9.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+nodent-compiler@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/nodent-compiler/-/nodent-compiler-3.2.2.tgz#515df515e5cb6970b37757b64093829d6af0f39a"
+  dependencies:
+    acorn ">=2.5.2"
+    acorn-es7-plugin "^1.1.7"
+    nodent-transform "^3.2.2"
+    source-map "^0.5.7"
+
+nodent-runtime@>=3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/nodent-runtime/-/nodent-runtime-3.2.1.tgz#9e2755d85e39f764288f0d4752ebcfe3e541e00e"
+
+nodent-transform@^3.2.2:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/nodent-transform/-/nodent-transform-3.2.3.tgz#094a0a6403688d5b2f8b5f1caf7dae26fe8565d8"
 
 nomnom@^1.8.1:
   version "1.8.1"

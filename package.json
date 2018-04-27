@@ -1,6 +1,6 @@
 {
   "name": "delivery-guy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/main.js",
   "repository": "git@github.com:WebCodr/delivery-guy.git",
   "author": "David <david@webcodr.io>",
@@ -20,6 +20,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
+    "fast-async": "^6.3.6",
     "fetch-mock": "^6.3.0",
     "flush-promises": "^1.0.0",
     "jest": "^22.4.3",
@@ -31,6 +32,6 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint ./src/**.js",
-    "dist": "webpack src/DeliveryGuy.js --mode production"
+    "dist": "webpack src/DeliveryGuy.js --mode production --output-library delivery-guy --output-library-target commonjs2"
   }
 }
