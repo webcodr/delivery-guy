@@ -16,40 +16,19 @@ describe('DevliveryGuy', () => {
     })
 
     describe('errors', () => {
-      it('throws an exception with JSON error response on a HTTP status error code', async () => {
+      it('throws an error on HTTP 400', async () => {
         const errorMessage = 'THE PIZZA IS COLD, I WILL NOT PAY FOR THIS!'
-        const httpStatusCode = 400
 
         fetchMock.get('/foo', {
           body: { message: errorMessage },
-          status: httpStatusCode
+          status: 400
         })
 
         try {
           await deliver('/foo')
           flushPromises()
         } catch (e) {
-          expect(e.body.message).toEqual(errorMessage)
-          expect(e.body.userMessage).toBe(undefined)
-          expect(e.response.status).toEqual(httpStatusCode)
-        }
-      })
-
-      it('throws an exception with text error response on a HTTP status error code', async () => {
-        const errorMessage = 'THE PIZZA IS COLD, I WILL NOT PAY FOR THIS!'
-        const httpStatusCode = 400
-
-        fetchMock.get('/foo', {
-          body: errorMessage,
-          status: httpStatusCode
-        })
-
-        try {
-          await deliver('/foo')
-          flushPromises()
-        } catch (e) {
-          expect(e.body).toEqual(errorMessage)
-          expect(e.response.status).toEqual(httpStatusCode)
+          expect(e.responseBody.message).toEqual(errorMessage)
         }
       })
     })

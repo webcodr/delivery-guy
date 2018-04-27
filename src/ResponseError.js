@@ -9,9 +9,9 @@ export default class ResponseError extends Error {
     this.response = response
 
     try {
-      this.body = JSON.parse(response.body)
+      this.responseBody = JSON.parse(response.body)
     } catch (e) {
-      this.body = response.body
+      this.responseBody = response.body
     }
 
     if (Error.captureStackTrace) {
