@@ -2,7 +2,7 @@
 
 export default class ResponseError extends Error {
   response: Response
-  responseBody: ReadableStream | string | null | void
+  responseBody: ?ReadableStream
 
   constructor(response: Response) {
     super(
