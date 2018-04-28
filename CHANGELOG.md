@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2
+
+### Changes
+
+- Added typechecks with Flow
+
 ## 2.0.1
 
 ### Changes

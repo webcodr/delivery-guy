@@ -3,6 +3,7 @@
     "fast-async"
   ],
   "presets": [
+    "flow",
     [
       "env",
       {

@@ -1,7 +1,12 @@
+// @flow
+
 import ResponseError from './ResponseError'
 
-const makeDelivery = async (url, options) => {
-  const response = await fetch(url, options)
+const makeDelivery = async function(
+  input: string | Request,
+  init?: RequestOptions
+): Promise<Response> {
+  const response = await fetch(input, init)
 
   if (!response.ok) {
     throw new ResponseError(response)
@@ -12,8 +17,11 @@ const makeDelivery = async (url, options) => {
 
 export const deliver = makeDelivery
 
-export const deliverJson = async (url, options) => {
-  const response = await makeDelivery(url, options)
+export const deliverJson = async function(
+  input: string | Request,
+  init?: RequestOptions
+): Promise<Response> {
+  const response = await makeDelivery(input, init)
 
   return response.json()
 }
