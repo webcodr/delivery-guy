@@ -16,9 +16,10 @@ describe('ResponseError', () => {
     expect(error.message).toEqual(expectedErrorMessage)
     expect(error.response.status).toEqual(400)
     expect(error.response.statusText).toEqual('Bad request')
+    expect(error.responseBody).toBe(undefined)
   })
 
-  it('should parse a JSON text response into an object', () => {
+  it('should parse a JSON response text response into an object', () => {
     const errorMessage = 'Something went wrong'
 
     const response = {
@@ -32,8 +33,22 @@ describe('ResponseError', () => {
     expect(error.responseBody.message).toEqual(errorMessage)
   })
 
-  it('should pass a non-JSON response into responseBody property', () => {
+  it('should pass a non-JSON response text into responseBody property', () => {
     const errorMessage = 'Something went wrong'
+
+    const response = {
+      url: '/foo',
+      status: 400,
+      statusText: 'Bad request',
+      body: errorMessage
+    }
+
+    const error = new ResponseError(response)
+    expect(error.responseBody).toEqual(errorMessage)
+  })
+
+  it('should pass a non-string response into responseBody property', () => {
+    const errorMessage = 1
 
     const response = {
       url: '/foo',
