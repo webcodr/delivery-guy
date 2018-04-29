@@ -43,5 +43,18 @@
     "dist/**.*",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "description": "DeliveryGuy is a wrapper for the Fetch API with included handling of HTTP errors",
+  "keywords": [
+    "delivery",
+    "delivery-guy",
+    "DeliveryGuy",
+    "delivery guy",
+    "fetch",
+    "fetch wrapper"
+  ],
+  "bugs": {
+    "url": "https://github.com/WebCodr/delivery-guy/issues",
+    "email": "david@webcodr.io"
+  }
 }
