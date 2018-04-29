@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/WebCodr/delivery-guy.svg?branch=master)](https://travis-ci.org/WebCodr/delivery-guy)
 [![Coverage Status](https://coveralls.io/repos/github/WebCodr/delivery-guy/badge.svg?branch=master)](https://coveralls.io/github/WebCodr/delivery-guy?branch=master)
+[![npm version](https://badge.fury.io/js/delivery-guy.svg)](https://badge.fury.io/js/delivery-guy)
 
 A simple Fetch API wrapper for HTTP error handling
 
