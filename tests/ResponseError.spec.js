@@ -32,16 +32,45 @@ describe('ResponseError', () => {
     expect(error.responseBody.message).toEqual(errorMessage)
   })
 
-  it('should capture stack trace', () => {
-    const spy = jest.spyOn(Error, 'captureStackTrace')
+  it('should pass a non-JSON response into responseBody property', () => {
+    const errorMessage = 'Something went wrong'
 
     const response = {
       url: '/foo',
       status: 400,
-      statusText: 'Bad request'
+      statusText: 'Bad request',
+      body: errorMessage
     }
 
     const error = new ResponseError(response)
-    expect(spy).toHaveBeenCalledWith(error, ResponseError)
+    expect(error.responseBody).toEqual(errorMessage)
+  })
+
+  describe('Error.captureStackTrace (V8-only feature)', () => {
+    it('should capture the stack trace', () => {
+      const spy = jest.spyOn(Error, 'captureStackTrace')
+
+      const response = {
+        url: '/foo',
+        status: 400,
+        statusText: 'Bad request'
+      }
+
+      const error = new ResponseError(response)
+      expect(spy).toHaveBeenCalledWith(error, ResponseError)
+    })
+
+    it('should not the capture stack trace', () => {
+      delete Error.captureStackTrace
+
+      const response = {
+        url: '/foo',
+        status: 400,
+        statusText: 'Bad request'
+      }
+
+      /* eslint-disable no-new */
+      new ResponseError(response)
+    })
   })
 })

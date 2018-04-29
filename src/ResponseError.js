@@ -23,7 +23,7 @@ export default class ResponseError extends Error {
       this.responseBody = response.body
     }
 
-    if (Error.captureStackTrace) {
+    if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, ResponseError)
     }
   }

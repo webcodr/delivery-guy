@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3
+
+### Changes
+
+- Add typecheck of `Error.captureStackTrace` and improve branch coverage to 100%
+
 ## 2.0.2
 
 ### Changes
