@@ -24,13 +24,14 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   yarn test
   yarn dist
 
+  # tag version
+  npm version "$VERSION" --message "build: release $VERSION" --no-git-tag-version
+
   # commit
   git add -A
   git add -f \
     dist/*.js
   git commit -m "build: build $VERSION"
-  # tag version
-  npm version "$VERSION" --message "build: release $VERSION" --no-git-tag-version
   git tag "$VERSION"
 
   # publish
