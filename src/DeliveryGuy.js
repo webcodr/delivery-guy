@@ -2,26 +2,30 @@
 
 import ResponseError from './ResponseError'
 
-const makeDelivery = async function(
+const checkResponse = function(response: Response) {
+  if (!response.ok) {
+    throw new ResponseError(response)
+  }
+}
+
+const deliver = async function(
   input: string | Request,
   init?: RequestOptions
 ): Promise<Response> {
   const response = await fetch(input, init)
 
-  if (!response.ok) {
-    throw new ResponseError(response)
-  }
+  checkResponse(response)
 
   return response
 }
 
-export const deliver = makeDelivery
-
-export const deliverJson = async function(
+const deliverJson = async function(
   input: string | Request,
   init?: RequestOptions
 ): Promise<Response> {
-  const response = await makeDelivery(input, init)
+  const response = await deliver(input, init)
 
   return response.json()
 }
+
+export { deliver, deliverJson }
