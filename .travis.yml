@@ -3,5 +3,5 @@ node_js:
   - "lts/*"
 script:
   - yarn flow
-  - yarn test
+  - yarn test:coverage
 after_success: yarn coverage
