@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4
+
+### Changes
+
+- Added release script
+
 ## 2.0.3
 
 ### Changes
