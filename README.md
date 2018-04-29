@@ -1,7 +1,7 @@
 # Delivery Guy
 
-[![CircleCI](https://circleci.com/gh/WebCodr/delivery-guy.svg?style=svg)](https://circleci.com/gh/WebCodr/delivery-guy)
 [![Build Status](https://travis-ci.org/WebCodr/delivery-guy.svg?branch=master)](https://travis-ci.org/WebCodr/delivery-guy)
+[![Coverage Status](https://coveralls.io/repos/github/WebCodr/delivery-guy/badge.svg?branch=master)](https://coveralls.io/github/WebCodr/delivery-guy?branch=master)
 
 A simple Fetch API wrapper for HTTP error handling
 
