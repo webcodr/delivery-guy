@@ -47,6 +47,7 @@
   "scripts": {
     "flow": "flow check",
     "test": "jest",
+    "test:integration": "yarn test -c jest.config.integration.js",
     "test:coverage": "jest --coverage",
     "test:mutations": "stryker run",
     "lint": "eslint ./src/**.js",
