@@ -1,11 +1,5 @@
-module.exports = {
-  moduleFileExtensions: ['js', 'json'],
-  transform: {
-    '^.+\\.js?$': 'babel-jest'
-  },
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
-  },
-  testMatch: ['<rootDir>/test/integration.spec.js'],
-  notify: true
-}
+let config = require('./jest.config.js')
+
+config.testMatch = ['<rootDir>/test/integration.spec.js']
+
+module.exports = config
