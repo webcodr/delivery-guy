@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+### Changes
+
+- Moved from Webpack to Rollup for much smaller build sizes
+
 ## 2.0.5
 
 ### Changes
