@@ -1,4 +1,4 @@
-import { deliver, deliverJson } from '../src/DeliveryGuy'
+import { deliver, deliverJson } from '../../src/DeliveryGuy'
 import fetchMock from 'fetch-mock'
 import flushPromises from 'flush-promises'
 

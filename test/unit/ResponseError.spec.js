@@ -1,4 +1,4 @@
-import ResponseError from '../src/ResponseError'
+import ResponseError from '../../src/ResponseError'
 
 describe('ResponseError', () => {
   it('should create an error message', () => {
