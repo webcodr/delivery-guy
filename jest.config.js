@@ -6,6 +6,6 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  testMatch: ['<rootDir>/test/unit/**/*.spec.js'],
+  testMatch: ['<rootDir>/test/**/*.spec.js'],
   notify: true
 }
