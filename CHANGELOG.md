@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+### Changes
+
+- Added interceptors `start` and `end`
+
 ## 3.0.0
 
 ### Changes
