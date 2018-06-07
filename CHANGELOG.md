@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0
+
+### Changes
+
+- Refactored interceptor handling
+- Added interceptor `error`
+
 ## 3.1.0
 
 ### Changes
