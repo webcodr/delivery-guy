@@ -17,13 +17,14 @@ DeliveryGuy.intercept = (interceptor: string, action: () => mixed) => {
 
 DeliveryGuy.callInterceptorActions = (
   interceptor: string,
-  input: string | Request
+  input: string | Request,
+  payload?: RequestOptions | Response
 ) => {
   const actions = DeliveryGuy.interceptors[interceptor] || []
 
   if (actions.length > 0) {
     for (const action of actions) {
-      action(input)
+      action(input, payload)
     }
   }
 }
@@ -38,9 +39,21 @@ const deliver = async function(
   input: string | Request,
   init?: RequestOptions
 ): Promise<Response> {
-  DeliveryGuy.callInterceptorActions('start', input)
-  const response = await fetch(input, init)
-  DeliveryGuy.callInterceptorActions('end', input)
+  let promise = Promise.resolve()
+
+  promise = promise.then(() => {
+    DeliveryGuy.callInterceptorActions('start', input, init)
+  })
+
+  promise = promise.then((): Promise<Response> => fetch(input, init))
+
+  promise = promise.then((response: Response): Response => {
+    DeliveryGuy.callInterceptorActions('end', input, response)
+
+    return response
+  })
+
+  const response = await promise
 
   checkResponse(response)
 
