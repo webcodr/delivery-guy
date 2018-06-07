@@ -6,7 +6,8 @@ function DeliveryGuy() {}
 
 DeliveryGuy.interceptors = {
   start: [],
-  end: []
+  end: [],
+  error: []
 }
 
 DeliveryGuy.intercept = (interceptor: string, action: () => mixed) => {
@@ -29,8 +30,9 @@ DeliveryGuy.callInterceptorActions = (
   }
 }
 
-const checkResponse = function(response: Response) {
+const checkResponse = function(input: string | Request, response: Response) {
   if (!response.ok) {
+    DeliveryGuy.callInterceptorActions('error', input, response)
     throw new ResponseError(response)
   }
 }
@@ -55,7 +57,7 @@ const deliver = async function(
 
   const response = await promise
 
-  checkResponse(response)
+  checkResponse(input, response)
 
   return response
 }

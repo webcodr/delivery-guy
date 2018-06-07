@@ -71,6 +71,25 @@ describe('DevliveryGuy', () => {
       expect(endInterceptor.mock.calls[0][0]).toBe(url)
     })
 
+    it('should call error interceptors', done => {
+      const url = '/foo'
+      const errorInterceptor = jest.fn()
+      DeliveryGuy.intercept('error', errorInterceptor)
+
+      fetchMock.get('/foo', {
+        body: { message: 'foo' },
+        status: 400
+      })
+
+      expect(errorInterceptor.mock.calls.length).toBe(0)
+
+      deliver('/foo').catch(e => {
+        expect(errorInterceptor.mock.calls.length).toBe(1)
+        expect(errorInterceptor.mock.calls[0][0]).toBe(url)
+        done()
+      })
+    })
+
     it('should not call unknown interceptors', async () => {
       const startInterceptor = jest.fn()
       DeliveryGuy.intercept('foo', startInterceptor)
