@@ -60,9 +60,9 @@ const getItemsText = async () => {
 // Console output: "started request with: '/api/items'"
 
 // POST request with JSON response
-const getItemsText = async () => {
+const addNewItem = async (name) => {
   try {
-    const payload = { foo: 'bar' }
+    const payload = { name: name }
     const newItemResponse = await deliverPostJson('/api/item', payload)
   } catch (e) {
     console.error(e.message)
