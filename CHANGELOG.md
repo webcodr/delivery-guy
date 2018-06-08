@@ -6,7 +6,7 @@
 
 - Rename `start` to `request` and `end` to `response`
 
-#### Changes
+### Changes
 
 - Add shortcut method `deliverPostJson()`
 
