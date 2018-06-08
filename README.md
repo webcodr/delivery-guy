@@ -17,7 +17,7 @@ A simple Fetch API wrapper for HTTP error handling
 ## Example
 
 ~~~ javascript
-import { DeliveryGuy, deliver, deliverJson } from 'delivery-guy'
+import { DeliveryGuy, deliver, deliverJson, deliverPostJson } from 'delivery-guy'
 
 let items = []
 let itemsText = null
@@ -25,7 +25,7 @@ let itemsText = null
 // Return parsed JSON directly
 const getItemsJson = async () => {
   try {
-    items = await deliverJson('/api/items')
+    const items = await deliverJson('/api/items')
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
@@ -58,4 +58,17 @@ const getItemsText = async () => {
   }
 }
 // Console output: "started request with: '/api/items'"
+
+// POST request with JSON response
+const getItemsText = async () => {
+  try {
+    const payload = { foo: 'bar' }
+    const newItemResponse = await deliverPostJson('/api/item', payload)
+  } catch (e) {
+    console.error(e.message)
+    console.log('HTTP Status', e.response.status)
+    console.log('Response Body'. e.responseBody)
+  }
+}
+
 ~~~

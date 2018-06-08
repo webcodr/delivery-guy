@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.0
+
+### Breaking Changes
+
+- Rename `start` to `request` and `end` to `response`
+
+## Changes
+
+- Add shortcut method `deliverPostJson()`
+
 ## 3.2.0
 
 ### Changes
