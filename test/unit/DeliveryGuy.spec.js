@@ -1,4 +1,9 @@
-import { DeliveryGuy, deliver, deliverJson } from '../../src/DeliveryGuy'
+import {
+  DeliveryGuy,
+  deliver,
+  deliverJson,
+  deliverPostJson
+} from '../../src/DeliveryGuy'
 import fetchMock from 'fetch-mock'
 import flushPromises from 'flush-promises'
 
@@ -32,6 +37,32 @@ describe('DevliveryGuy', () => {
           done()
         })
       })
+    })
+  })
+
+  describe('deliverPostJson()', () => {
+    it('delivers a JSON response from a POST request', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+      const postData = { bar: 'foo' }
+
+      fetchMock.post((input, init) => {
+        return input === url && init.body === postData
+      }, mockData)
+
+      const jsonBody = await deliverPostJson(url, postData)
+
+      expect(jsonBody).toEqual(mockData)
+    })
+
+    it('does not override method POST', async () => {
+      const mockData = { foo: 'bar' }
+
+      fetchMock.post('/foo', mockData)
+
+      const jsonBody = await deliverPostJson('/foo', {}, { method: 'GET' })
+
+      expect(jsonBody).toEqual(mockData)
     })
   })
 

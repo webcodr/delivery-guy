@@ -71,4 +71,21 @@ const deliverJson = async function(
   return response.json()
 }
 
-export { DeliveryGuy, deliver, deliverJson }
+const deliverPostJson = async function(
+  input: string | Request,
+  payload: BodyInit,
+  options?: RequestOptions = {}
+): Promise<Response> {
+  const defaultOptions: RequestOptions = {
+    method: 'POST',
+    body: payload
+  }
+
+  const init: RequestOptions = Object.assign(options, defaultOptions)
+
+  const response = await deliver(input, init)
+
+  return response.json()
+}
+
+export { DeliveryGuy, deliver, deliverJson, deliverPostJson }
