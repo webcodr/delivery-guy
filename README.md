@@ -46,7 +46,7 @@ const getItemsText = async () => {
 }
 
 // Add interceptor for DeliveryGuy requests
-DeliveryGuy.intercept('start', (input) => { console.log('started request with', input)})
+DeliveryGuy.intercept('request', (input) => { console.log('started request with', input)})
 const getItemsText = async () => {
   try {
     const response = await deliver('/api/items')

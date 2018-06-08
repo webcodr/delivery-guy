@@ -5,8 +5,8 @@ import ResponseError from './ResponseError'
 function DeliveryGuy() {}
 
 DeliveryGuy.interceptors = {
-  start: [],
-  end: [],
+  request: [],
+  response: [],
   error: []
 }
 
@@ -44,13 +44,13 @@ const deliver = async function(
   let promise = Promise.resolve()
 
   promise = promise.then(() => {
-    DeliveryGuy.callInterceptorActions('start', input, init)
+    DeliveryGuy.callInterceptorActions('request', input, init)
   })
 
   promise = promise.then((): Promise<Response> => fetch(input, init))
 
   promise = promise.then((response: Response): Response => {
-    DeliveryGuy.callInterceptorActions('end', input, response)
+    DeliveryGuy.callInterceptorActions('response', input, response)
 
     return response
   })

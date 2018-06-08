@@ -51,24 +51,24 @@ describe('DevliveryGuy', () => {
   describe('interceptors', () => {
     it('should call interceptors', async () => {
       const url = '/foo'
-      const startInterceptor = jest.fn()
-      const endInterceptor = jest.fn()
-      DeliveryGuy.intercept('start', startInterceptor)
-      DeliveryGuy.intercept('end', endInterceptor)
+      const requestInterceptor = jest.fn()
+      const responseInterceptor = jest.fn()
+      DeliveryGuy.intercept('request', requestInterceptor)
+      DeliveryGuy.intercept('response', responseInterceptor)
       const mockData = { foo: 'bar' }
 
       fetchMock.get(url, mockData)
 
-      expect(startInterceptor.mock.calls.length).toBe(0)
-      expect(endInterceptor.mock.calls.length).toBe(0)
+      expect(requestInterceptor.mock.calls.length).toBe(0)
+      expect(responseInterceptor.mock.calls.length).toBe(0)
 
       const jsonBody = await deliverJson(url)
 
       expect(jsonBody).toEqual(mockData)
-      expect(startInterceptor.mock.calls.length).toBe(1)
-      expect(endInterceptor.mock.calls.length).toBe(1)
-      expect(startInterceptor.mock.calls[0][0]).toBe(url)
-      expect(endInterceptor.mock.calls[0][0]).toBe(url)
+      expect(requestInterceptor.mock.calls.length).toBe(1)
+      expect(responseInterceptor.mock.calls.length).toBe(1)
+      expect(requestInterceptor.mock.calls[0][0]).toBe(url)
+      expect(responseInterceptor.mock.calls[0][0]).toBe(url)
     })
 
     it('should call error interceptors', done => {
