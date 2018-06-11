@@ -38,7 +38,7 @@ const checkResponse = function(input: string | Request, response: Response) {
   }
 }
 
-const deliver = async function(
+const createInterceptorPromise = function(
   input: string | Request,
   init?: RequestOptions
 ): Promise<Response> {
@@ -56,6 +56,14 @@ const deliver = async function(
     return response
   })
 
+  return promise
+}
+
+const deliver = async function(
+  input: string | Request,
+  init?: RequestOptions
+): Promise<Response> {
+  const promise = createInterceptorPromise(input, init)
   const response = await promise
 
   checkResponse(input, response)
@@ -86,7 +94,6 @@ const deliverPostJson = async function(
   }
 
   const init: RequestOptions = merge(options, defaultOptions)
-
   const response = await deliver(input, init)
 
   return response.json()
