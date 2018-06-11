@@ -1,4 +1,4 @@
 exclude:
 - /scripts/.*
-- *.conf.js
-- *.config.js
+- .*.conf.js
+- .*.config.js
