@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.0
+
+### Changes
+
+- Add default content type for method `deliverPostJson()`
+- Add deep merge ability of RequestOptions for method `deliverPostJson()`
+
 ## 4.0.0
 
 ### Breaking Changes
