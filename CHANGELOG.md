@@ -4,6 +4,7 @@
 
 ### Changes
 
+- The payload of `deliverPostJson()` will be automatically stringified
 - Add default content type for method `deliverPostJson()`
 - Add deep merge ability of RequestOptions for method `deliverPostJson()`
 
