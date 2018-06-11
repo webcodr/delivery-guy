@@ -71,5 +71,8 @@
   "bugs": {
     "url": "https://github.com/WebCodr/delivery-guy/issues",
     "email": "david@webcodr.io"
+  },
+  "dependencies": {
+    "deepmerge": "^2.1.1"
   }
 }

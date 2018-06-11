@@ -1,5 +1,6 @@
 // @flow
 
+import merge from 'deepmerge'
 import ResponseError from './ResponseError'
 
 function DeliveryGuy() {}
@@ -78,10 +79,13 @@ const deliverPostJson = async function(
 ): Promise<Response> {
   const defaultOptions: RequestOptions = {
     method: 'POST',
-    body: payload
+    body: JSON.stringify(payload),
+    headers: {
+      'content-type': 'application/json'
+    }
   }
 
-  const init: RequestOptions = Object.assign(options, defaultOptions)
+  const init: RequestOptions = merge(options, defaultOptions)
 
   const response = await deliver(input, init)
 

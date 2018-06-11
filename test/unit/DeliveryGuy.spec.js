@@ -47,7 +47,11 @@ describe('DevliveryGuy', () => {
       const postData = { bar: 'foo' }
 
       fetchMock.post((input, init) => {
-        return input === url && init.body === postData
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json'
+        )
       }, mockData)
 
       const jsonBody = await deliverPostJson(url, postData)
@@ -56,11 +60,24 @@ describe('DevliveryGuy', () => {
     })
 
     it('does not override method POST', async () => {
+      const url = '/foo'
+      const userAgent = 'Mozilla/4.0 MDN Example'
+      const postData = { bar: 'foo' }
       const mockData = { foo: 'bar' }
 
-      fetchMock.post('/foo', mockData)
+      fetchMock.post((input, init) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json' &&
+          init.headers['user-agent'] === userAgent
+        )
+      }, mockData)
 
-      const jsonBody = await deliverPostJson('/foo', {}, { method: 'GET' })
+      const jsonBody = await deliverPostJson(url, postData, {
+        method: 'GET',
+        headers: { 'user-agent': userAgent }
+      })
 
       expect(jsonBody).toEqual(mockData)
     })
