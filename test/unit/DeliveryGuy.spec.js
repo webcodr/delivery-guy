@@ -27,13 +27,16 @@ describe('DevliveryGuy', () => {
 
         fetchMock.get('/foo', {
           body: { message: errorMessage },
-          status: 400
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
         })
 
-        deliver('/foo').catch(e => {
+        deliver('/foo').catch(async e => {
           expect(typeof e).toEqual('object')
-          expect(typeof e.responseBody).toEqual('object')
-          expect(e.responseBody.message).toEqual(errorMessage)
+
+          const body = await e.response.json()
+
+          expect(body.message).toEqual(errorMessage)
           done()
         })
       })

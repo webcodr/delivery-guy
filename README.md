@@ -28,7 +28,8 @@ const getItemsJson = async () => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.responseBody)
+    const responseBody = await e.response.json()
+    console.log('Response Body'. responseBody)
   }
 }
 
@@ -40,7 +41,8 @@ const getItemsText = async () => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.responseBody)
+    const responseBody = await e.response.json()
+    console.log('Response Body'. responseBody)
   }
 }
 
@@ -53,7 +55,8 @@ const getItemsText = async () => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.responseBody)
+    const responseBody = await e.response.json()
+    console.log('Response Body'. responseBody)
   }
 }
 // Console output: "started request with: '/api/items'"
@@ -66,7 +69,8 @@ const addNewItem = async (name) => {
   } catch (e) {
     console.error(e.message)
     console.log('HTTP Status', e.response.status)
-    console.log('Response Body'. e.responseBody)
+    const responseBody = await e.response.json()
+    console.log('Response Body'. responseBody)
   }
 }
 
