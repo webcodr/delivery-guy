@@ -1,6 +1,6 @@
 {
   "name": "delivery-guy",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "main": "./dist/main.js",
   "repository": "git@github.com:WebCodr/delivery-guy.git",
   "author": "David <david@webcodr.io>",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.0
+
+### Breaking Changes
+
+- Complete overhaul of responses in error handling due to problems with async JSON parsing (see readme for new examples)
+
 ## 4.1.0
 
 ### Changes
