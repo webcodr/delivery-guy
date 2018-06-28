@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.1.0
+
+## Changes
+
+- Refactorings
+- Global request options
+- Configuration object (used by interceptors and global request options)
+
 ## 5.0.0
 
 ### Breaking Changes

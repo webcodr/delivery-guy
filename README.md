@@ -21,6 +21,9 @@ import { DeliveryGuy, deliver, deliverJson, deliverPostJson } from 'delivery-guy
 let items = []
 let itemsText = null
 
+// Set a global request option applied to every request
+DeliveryGuy.addRequestOption('header', { 'user-agent': userAgent })
+
 // Return parsed JSON directly
 const getItemsJson = async () => {
   try {
