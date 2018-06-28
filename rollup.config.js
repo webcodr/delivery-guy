@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
+import resolve from 'rollup-plugin-node-resolve'
 
 export default {
   input: './src/delivery_guy.js',
@@ -9,6 +10,7 @@ export default {
   },
   plugins: [
     uglify(),
+    resolve(),
     babel({
       babelrc: false,
       plugins: ['fast-async', 'external-helpers', 'transform-class-properties'],
