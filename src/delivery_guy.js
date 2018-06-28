@@ -14,8 +14,13 @@ const checkResponse = function(input: string | Request, response: Response) {
 
 const deliver = async function(
   input: string | Request,
-  init?: RequestOptions
+  options?: RequestOptions = {}
 ): Promise<Response> {
+  const init: RequestOptions = merge.all([
+    options,
+    DeliveryGuy.getOption('globalRequestOptions')
+  ])
+
   const promise = createInterceptorPromise(input, init)
   const response = await promise
 
@@ -46,11 +51,7 @@ const deliverPostJson = async function(
     }
   }
 
-  const init: RequestOptions = merge.all([
-    options,
-    defaultOptions,
-    DeliveryGuy.getOption('globalRequestOptions')
-  ])
+  const init: RequestOptions = merge.all([options, defaultOptions])
   const response = await deliver(input, init)
 
   return response.json()
