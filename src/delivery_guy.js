@@ -3,11 +3,15 @@
 import merge from 'deepmerge'
 import DeliveryGuy from './core/instance'
 import ResponseError from './response_error'
-import { createInterceptorPromise } from './core/interceptors'
+import { getOption } from './core/config'
+import {
+  createInterceptorPromise,
+  callInterceptorActions
+} from './core/interceptors'
 
 const checkResponse = function(input: string | Request, response: Response) {
   if (!response.ok) {
-    DeliveryGuy.callInterceptorActions('error', input, response)
+    callInterceptorActions('error', input, response)
     throw new ResponseError(response)
   }
 }
@@ -18,7 +22,7 @@ const deliver = async function(
 ): Promise<Response> {
   const init: RequestOptions = merge.all([
     options,
-    DeliveryGuy.getOption('globalRequestOptions')
+    getOption('globalRequestOptions')
   ])
 
   const promise = createInterceptorPromise(input, init)

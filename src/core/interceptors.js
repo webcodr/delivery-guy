@@ -29,7 +29,6 @@ const callInterceptorActions = (
 const initInterceptors = (instance: DeliveryGuy) => {
   instance.setOption('interceptors', interceptors)
   instance.intercept = intercept
-  instance.callInterceptorActions = callInterceptorActions
 }
 
 const createInterceptorPromise = (
@@ -44,13 +43,15 @@ const createInterceptorPromise = (
 
   promise = promise.then((): Promise<Response> => fetch(input, init))
 
-  promise = promise.then((response: Response): Response => {
-    callInterceptorActions('response', input, response)
+  promise = promise.then(
+    (response: Response): Response => {
+      callInterceptorActions('response', input, response)
 
-    return response
-  })
+      return response
+    }
+  )
 
   return promise
 }
 
-export { initInterceptors, createInterceptorPromise }
+export { initInterceptors, createInterceptorPromise, callInterceptorActions }

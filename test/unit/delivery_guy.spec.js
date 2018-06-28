@@ -4,6 +4,7 @@ import {
   deliverJson,
   deliverPostJson
 } from '../../src/delivery_guy'
+import { callInterceptorActions } from '../../src/core/interceptors'
 import fetchMock from 'fetch-mock'
 import flushPromises from 'flush-promises'
 
@@ -45,25 +46,20 @@ describe('DevliveryGuy', () => {
     it('does apply global request options', async () => {
       const url = '/foo'
       const userAgent = 'Mozilla/5.0 FOO!'
-      const postData = { bar: 'foo' }
       const mockData = { foo: 'bar' }
 
-      fetchMock.post((input, init) => {
-        return (
-          input === url &&
-          init.body === JSON.stringify(postData) &&
-          init.headers['content-type'] === 'application/json' &&
-          init.headers['user-agent'] === userAgent
-        )
+      fetchMock.get((input, init) => {
+        return input === url && init.headers['user-agent'] === userAgent
       }, mockData)
 
       DeliveryGuy.addRequestOption('headers', { 'user-agent': userAgent })
 
-      const jsonBody = await deliverPostJson(url, postData, {
-        method: 'GET'
-      })
+      const response = await deliver(url)
+      const jsonBody = await response.json()
 
       expect(jsonBody).toEqual(mockData)
+
+      // Since this is a global property it should be reset to not interfere with other tests
       DeliveryGuy.removeRequestOption('headers')
     })
   })
@@ -181,7 +177,7 @@ describe('DevliveryGuy', () => {
     })
 
     it('should fallback to empty array on unknown interceptor', async () => {
-      DeliveryGuy.callInterceptorActions('foo', 'bar')
+      callInterceptorActions('foo', 'bar')
     })
   })
 
