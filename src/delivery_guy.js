@@ -46,7 +46,11 @@ const deliverPostJson = async function(
     }
   }
 
-  const init: RequestOptions = merge(options, defaultOptions)
+  const init: RequestOptions = merge.all([
+    options,
+    defaultOptions,
+    DeliveryGuy.getOption('globalRequestOptions')
+  ])
   const response = await deliver(input, init)
 
   return response.json()

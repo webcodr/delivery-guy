@@ -41,6 +41,31 @@ describe('DevliveryGuy', () => {
         })
       })
     })
+
+    it('does apply global request options', async () => {
+      const url = '/foo'
+      const userAgent = 'Mozilla/5.0 FOO!'
+      const postData = { bar: 'foo' }
+      const mockData = { foo: 'bar' }
+
+      fetchMock.post((input, init) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json' &&
+          init.headers['user-agent'] === userAgent
+        )
+      }, mockData)
+
+      DeliveryGuy.addRequestOption('headers', { 'user-agent': userAgent })
+
+      const jsonBody = await deliverPostJson(url, postData, {
+        method: 'GET'
+      })
+
+      expect(jsonBody).toEqual(mockData)
+      DeliveryGuy.removeRequestOption('headers')
+    })
   })
 
   describe('deliverPostJson()', () => {

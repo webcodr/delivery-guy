@@ -1,9 +1,11 @@
 // @flow
 
-const options = {}
+const options = {
+  globalRequestOptions: {}
+}
 
 const initConfig = (instance: DeliveryGuy) => {
-  instance.getOption = (option: string): mixed => {
+  instance.getOption = (option: string): {} | string | number | null => {
     return options[option] || null
   }
 
