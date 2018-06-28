@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.1
+
+## Bug Fixes
+
+- Fix stupid request option merge issue
+
 ## 5.1.0
 
 ## Changes
