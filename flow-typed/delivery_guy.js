@@ -1,9 +1,6 @@
 declare interface DeliveryGuy {
-  interceptors: {
-    request: Array<string>,
-    response: Array<string>,
-    error: Array<string>
-  };
+  getOption: (option: string) => mixed;
+  setOption: (option: string, value: mixed) => void;
   intercept: (interceptor: string, action: () => mixed) => void;
   callInterceptorActions: (
     interceptor: string,

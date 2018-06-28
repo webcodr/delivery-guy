@@ -27,7 +27,7 @@ const callInterceptorActions = (
 }
 
 const initInterceptors = (instance: DeliveryGuy) => {
-  instance.interceptors = interceptors
+  instance.setOption('interceptors', interceptors)
   instance.intercept = intercept
   instance.callInterceptorActions = callInterceptorActions
 }
