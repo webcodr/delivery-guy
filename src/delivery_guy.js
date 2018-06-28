@@ -1,9 +1,8 @@
 // @flow
 
 import merge from 'deepmerge'
+import DeliveryGuy from './core/instance'
 import ResponseError from './response_error'
-
-function DeliveryGuy() {}
 
 DeliveryGuy.interceptors = {
   request: [],
