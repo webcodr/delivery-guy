@@ -1,4 +1,4 @@
-import ResponseError from '../../src/ResponseError'
+import ResponseError from '../../src/response_error'
 import { Response } from 'node-fetch'
 
 describe('ResponseError', () => {

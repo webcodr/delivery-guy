@@ -1,7 +1,7 @@
 // @flow
 
 import merge from 'deepmerge'
-import ResponseError from './ResponseError'
+import ResponseError from './response_error'
 
 function DeliveryGuy() {}
 

@@ -3,7 +3,7 @@ import {
   deliver,
   deliverJson,
   deliverPostJson
-} from '../../src/DeliveryGuy'
+} from '../../src/delivery_guy'
 import fetchMock from 'fetch-mock'
 import flushPromises from 'flush-promises'
 
