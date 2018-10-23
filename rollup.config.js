@@ -13,11 +13,11 @@ export default {
     resolve(),
     babel({
       babelrc: false,
-      plugins: ['fast-async', 'external-helpers', 'transform-class-properties'],
+      plugins: ['module:fast-async', '@babel/plugin-proposal-class-properties'],
       presets: [
-        'flow',
+        '@babel/preset-flow',
         [
-          'env',
+          '@babel/preset-env',
           {
             modules: false
           }

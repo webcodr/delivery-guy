@@ -1,11 +1,11 @@
 {
   "plugins": [
-    "fast-async"
+    "module:fast-async"
   ],
   "presets": [
-    "flow",
+    "@babel/preset-flow",
     [
-      "env",
+      "@babel/preset-env",
       {
         "targets": {
           "node": "current"

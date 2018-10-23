@@ -7,5 +7,5 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   testMatch: ['<rootDir>/test/unit/**/*.spec.js'],
-  notify: true
+  notify: false
 }

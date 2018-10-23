@@ -3,7 +3,7 @@ module.exports = function(config) {
     testRunner: 'jest',
     mutator: 'javascript',
     transpilers: ['babel'],
-    reporter: ['html', 'clear-text', 'progress', 'dashboard'],
+    reporters: ['html', 'clear-text', 'progress', 'dashboard'],
     coverageAnalysis: 'off',
     mutate: ['src/**/*.js'],
     babelrcFile: '.babelrc'
