@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.0
+
+### Breaking Changes
+
+- Upgrade to Babel 7
+
 ## 5.1.1
 
 ## Bug Fixes
