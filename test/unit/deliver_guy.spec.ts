@@ -52,8 +52,8 @@ describe('DeliveryGuy', () => {
     })
   })
 
-  describe('global headers', () => {
-    it('does apply a global herader', async () => {
+  describe('global options', () => {
+    it('does apply a global header', async () => {
       const url = '/foo'
       const userAgent = 'Mozilla/5.0 FOO!'
       const mockData = { foo: 'bar' }
@@ -62,7 +62,22 @@ describe('DeliveryGuy', () => {
         return input === url && init.headers['user-agent'] === userAgent
       }, mockData)
 
-      DeliveryGuy.addGlobalHeader('user-agent', userAgent)
+      DeliveryGuy.addGlobalOption('headers', {'user-agent': userAgent})
+
+      const response = await DeliveryGuy.get(url)
+
+      expect(response).toEqual(mockData)
+    })
+
+    it('does apply global credentials settings', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+
+      fetchMock.get((input, init) => {
+        return input === url && init.credentials === 'same-origin'
+      }, mockData)
+
+      DeliveryGuy.addGlobalOption('credentials', 'same-origin')
 
       const response = await DeliveryGuy.get(url)
 

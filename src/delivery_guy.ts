@@ -1,18 +1,30 @@
 class DeliveryGuy {
-  private globalHeaders: object = {}
+  private readonly DEFAULT_GLOBAL_OPTIONS = {
+    headers: {}
+  }
 
-  private interceptors = {
+  private readonly DEFAULT_INTERCEPTORS = {
     request: [],
     response: [],
     error: []
   }
 
-  public addGlobalHeader(name: string, value: string) {
-    this.globalHeaders[name] = value
+  private globalOptions = {
+    ...this.DEFAULT_GLOBAL_OPTIONS
+  }
+
+  private interceptors = {
+    ...this.DEFAULT_INTERCEPTORS
+  }
+
+  public addGlobalOption(name: string, value: any) {
+    this.globalOptions[name] = value
   }
 
   public reset() {
-    this.globalHeaders = {}
+    this.globalOptions = {
+      ...this.DEFAULT_GLOBAL_OPTIONS
+    }
     this.interceptors = {
       request: [],
       response: [],
@@ -62,7 +74,8 @@ class DeliveryGuy {
   }
 
   private createConfig(payload?: string | object, userConfig?: RequestInit): RequestInit {
-    const headers = { ...this.globalHeaders }
+    const globalOptions = { ...this.globalOptions }
+    let headers = globalOptions.headers || {}
     let body = null
 
     if (payload && typeof payload === 'object') {
@@ -73,6 +86,7 @@ class DeliveryGuy {
     }
 
     return {
+      ...globalOptions,
       ...userConfig,
       body,
       headers
