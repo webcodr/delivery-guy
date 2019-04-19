@@ -11,6 +11,15 @@ class DeliveryGuy {
     this.globalHeaders[name] = value
   }
 
+  public reset() {
+    this.globalHeaders = {}
+    this.interceptors = {
+      request: [],
+      response: [],
+      error: []
+    }
+  }
+
   public intercept(interceptor: string, action: Function) {
     this.interceptors[interceptor].push(action)
   }
@@ -22,6 +31,13 @@ class DeliveryGuy {
       for (const action of actions) {
         action(url, payload)
       }
+    }
+  }
+
+  private checkResponse(url: string, response: Response) {
+    if (!response.ok) {
+      this.callInterceptorActions('error', url, response)
+      throw new Error()
     }
   }
 
@@ -45,37 +61,54 @@ class DeliveryGuy {
     return promise
   }
 
-
-  private async request(url: string, body?: BodyInit, userConfig?: RequestInit) {
+  private createConfig(payload?: string | object, userConfig?: RequestInit): RequestInit {
     const headers = { ...this.globalHeaders }
+    let body = null
 
-    if (body && typeof body === 'object') {
-      body = JSON.stringify(body)
+    if (payload && typeof payload === 'object') {
+      body = JSON.stringify(payload)
       headers['content-type'] = 'application/json'
+    } else {
+      body = payload
     }
 
-    const config: RequestInit = {
+    return {
       ...userConfig,
       body,
       headers
     }
+  }
 
-    return this.createInterceptorPromise(url, config)
+  private async request(url: string, payload?: string | object, userConfig?: RequestInit) {
+    const config = this.createConfig(payload, userConfig)
+    const promise = this.createInterceptorPromise(url, config)
+    const response = await promise
+
+    this.checkResponse(url, response)
+
+    const responseText = await response.text()
+
+    try {
+      return JSON.parse(responseText)
+
+    } catch(exception) {
+      return responseText
+    }
   }
 
   public async get(url: string): Promise<Response> {
     return this.request(url)
   }
 
-  public async post(url: string, payload: BodyInit): Promise<Response> {
+  public async post(url: string, payload: string | object): Promise<Response> {
     return this.request(url, payload, { method: 'POST' })
   }
 
-  public async put(url: string, payload: BodyInit): Promise<Response> {
+  public async put(url: string, payload: string | object): Promise<Response> {
     return this.request(url, payload, { method: 'PUT' })
   }
 
-  public async patch(url: string, payload: BodyInit): Promise<Response> {
+  public async patch(url: string, payload: string | object): Promise<Response> {
     return this.request(url, payload, { method: 'PATCH' })
   }
 

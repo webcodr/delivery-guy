@@ -5,6 +5,7 @@ import * as flushPromises from 'flush-promises'
 describe('DeliveryGuy', () => {
   afterEach(() => {
     fetchMock.restore()
+    DeliveryGuy.reset()
   })
 
   describe('get()', () => {
@@ -14,10 +15,58 @@ describe('DeliveryGuy', () => {
       fetchMock.get('/foo', mockData)
 
       const response = await DeliveryGuy.get('/foo')
-      const jsonBody = await response.json()
       flushPromises()
 
+      expect(response).toEqual(mockData)
+    })
+
+    it('delivers a text response', async () => {
+      const mockData = 'Hello World!'
+
+      fetchMock.get('/foo', mockData)
+
+      const response = await DeliveryGuy.get('/foo')
+      flushPromises()
+
+      expect(response).toEqual(mockData)
+    })
+  })
+
+  describe('post()', () => {
+    it('delivers a JSON response from a POST request', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+      const postData = { bar: 'foo' }
+
+      fetchMock.post((input, init) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json'
+        )
+      }, mockData)
+
+      const jsonBody = await DeliveryGuy.post(url, postData)
+
       expect(jsonBody).toEqual(mockData)
+    })
+  })
+
+  describe('global headers', () => {
+    it('does apply a global herader', async () => {
+      const url = '/foo'
+      const userAgent = 'Mozilla/5.0 FOO!'
+      const mockData = { foo: 'bar' }
+
+      fetchMock.get((input, init) => {
+        return input === url && init.headers['user-agent'] === userAgent
+      }, mockData)
+
+      DeliveryGuy.addGlobalHeader('user-agent', userAgent)
+
+      const response = await DeliveryGuy.get(url)
+
+      expect(response).toEqual(mockData)
     })
   })
 
@@ -37,7 +86,7 @@ describe('DeliveryGuy', () => {
 
       const response = await DeliveryGuy.get(url)
 
-      expect(await response.json()).toEqual(mockData)
+      expect(response).toEqual(mockData)
       expect(requestInterceptor.mock.calls.length).toBe(1)
       expect(responseInterceptor.mock.calls.length).toBe(1)
       expect(requestInterceptor.mock.calls[0][0]).toBe(url)
