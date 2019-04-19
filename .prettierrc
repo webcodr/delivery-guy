@@ -1,3 +1,14 @@
-semi: false
-singleQuote: true
-bracketSpacing: true
+{
+  "singleQuote": true,
+  "trailingComma": "none",
+  "semi:" false,
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ]
+}
