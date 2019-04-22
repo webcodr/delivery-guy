@@ -1,3 +1,5 @@
+import { ResponseError } from './response_error'
+
 class DeliveryGuy {
   private readonly DEFAULT_GLOBAL_OPTIONS = {
     headers: {}
@@ -49,7 +51,7 @@ class DeliveryGuy {
   private checkResponse(url: string, response: Response) {
     if (!response.ok) {
       this.callInterceptorActions('error', url, response)
-      throw new Error()
+      throw new ResponseError(response)
     }
   }
 

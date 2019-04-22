@@ -18,6 +18,8 @@
       "arrow-parameter",
       "property-declaration",
       "member-variable-declaration"
-    ]
+    ],
+    "no-single-line-block-comment": false,
+    "completed-docs": false
   }
 }

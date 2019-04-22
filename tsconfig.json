@@ -8,7 +8,6 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
     "importHelpers": true,
     "jsx": "react",
     "alwaysStrict": true,
