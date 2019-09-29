@@ -50,6 +50,83 @@ describe('DeliveryGuy', () => {
     })
   })
 
+  describe('put()', () => {
+    it('delivers a JSON response from a PUT request', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+      const postData = { bar: 'foo' }
+
+      fetchMock.put((input: any, init: any) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json'
+        )
+      }, mockData)
+
+      const jsonBody = await DeliveryGuy.put(url, postData)
+
+      expect(jsonBody).toEqual(mockData)
+    })
+  })
+
+  describe('patch()', () => {
+    it('delivers a JSON response from a PATCH request', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+      const postData = { bar: 'foo' }
+
+      fetchMock.patch((input: any, init: any) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json'
+        )
+      }, mockData)
+
+      const jsonBody = await DeliveryGuy.patch(url, postData)
+
+      expect(jsonBody).toEqual(mockData)
+    })
+  })
+
+  describe('delete()', () => {
+    it('delivers a JSON response from a DELETE request', async () => {
+      const mockData = { foo: 'bar' }
+
+      fetchMock.delete('/foo', mockData)
+
+      const response = await DeliveryGuy.delete('/foo')
+
+      expect(response).toEqual(mockData)
+    })
+  })
+
+  describe('head()', () => {
+    it('delivers a JSON response from a HEAD request', async () => {
+      const mockData = { foo: 'bar' }
+
+      fetchMock.head('/foo', mockData)
+
+      const response = await DeliveryGuy.head('/foo')
+
+      expect(response).toEqual(mockData)
+    })
+  })
+
+  describe('options()', () => {
+    it('delivers a JSON response from a OPTIONS request', async () => {
+      const mockData = { foo: 'bar' }
+
+      fetchMock.mock('/foo', mockData, { method: 'OPTIONS' })
+
+      const response = await DeliveryGuy.options('/foo')
+
+      expect(response).toEqual(mockData)
+    })
+  })
+
+
   describe('options', () => {
     it('does apply a header', async () => {
       const url = '/foo'
