@@ -1,6 +1,6 @@
-import * as DeliveryGuy from '../dist/main'
 import * as fetchMock from 'fetch-mock'
 import * as flushPromises from 'flush-promises'
+import * as DeliveryGuy from '../dist/main'
 
 describe('DevliveryGuy', () => {
   describe('get()', () => {
@@ -10,8 +10,7 @@ describe('DevliveryGuy', () => {
       fetchMock.get('/foo', mockData)
 
       // @ts-ignore
-      const response = await DeliveryGuy.get('/foo')
-      const jsonBody = await response.json()
+      const jsonBody = await DeliveryGuy.get('/foo')
       flushPromises()
 
       expect(jsonBody).toEqual(mockData)
