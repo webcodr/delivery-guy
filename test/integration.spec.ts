@@ -1,5 +1,5 @@
+// tslint:disable-next-line
 import * as fetchMock from 'fetch-mock'
-import * as flushPromises from 'flush-promises'
 import * as DeliveryGuy from '../dist/main'
 
 describe('DevliveryGuy', () => {
@@ -11,7 +11,26 @@ describe('DevliveryGuy', () => {
 
       // @ts-ignore
       const jsonBody = await DeliveryGuy.get('/foo')
-      flushPromises()
+
+      expect(jsonBody).toEqual(mockData)
+    })
+  })
+
+  describe('post()', () => {
+    it('delivers a JSON response', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+      const postData = { bar: 'foo' }
+
+      fetchMock.post((input: any, init: any) => {
+        return (
+          input === url &&
+          init.body === JSON.stringify(postData) &&
+          init.headers['content-type'] === 'application/json'
+        )
+      }, mockData)
+
+      const jsonBody = await DeliveryGuy.post(url, postData)
 
       expect(jsonBody).toEqual(mockData)
     })

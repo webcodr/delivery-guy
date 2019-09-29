@@ -1,6 +1,6 @@
-import DeliveryGuy from '../../src/delivery_guy'
+// tslint:disable-next-line
 import * as fetchMock from 'fetch-mock'
-import * as flushPromises from 'flush-promises'
+import DeliveryGuy from '../../src/delivery_guy'
 
 describe('DeliveryGuy', () => {
   afterEach(() => {
@@ -15,7 +15,6 @@ describe('DeliveryGuy', () => {
       fetchMock.get('/foo', mockData)
 
       const response = await DeliveryGuy.get('/foo')
-      flushPromises()
 
       expect(response).toEqual(mockData)
     })
@@ -26,7 +25,6 @@ describe('DeliveryGuy', () => {
       fetchMock.get('/foo', mockData)
 
       const response = await DeliveryGuy.get('/foo')
-      flushPromises()
 
       expect(response).toEqual(mockData)
     })
@@ -38,7 +36,7 @@ describe('DeliveryGuy', () => {
       const mockData = { foo: 'bar' }
       const postData = { bar: 'foo' }
 
-      fetchMock.post((input, init) => {
+      fetchMock.post((input: any, init: any) => {
         return (
           input === url &&
           init.body === JSON.stringify(postData) &&
@@ -58,7 +56,7 @@ describe('DeliveryGuy', () => {
       const userAgent = 'Mozilla/5.0 FOO!'
       const mockData = { foo: 'bar' }
 
-      fetchMock.get((input, init) => {
+      fetchMock.get((input: any, init: any) => {
         return input === url && init.headers['user-agent'] === userAgent
       }, mockData)
 
@@ -73,7 +71,7 @@ describe('DeliveryGuy', () => {
       const url = '/foo'
       const mockData = { foo: 'bar' }
 
-      fetchMock.get((input, init) => {
+      fetchMock.get((input: any, init: any) => {
         return input === url && init.credentials === 'same-origin'
       }, mockData)
 

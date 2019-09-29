@@ -20,6 +20,11 @@
       "member-variable-declaration"
     ],
     "no-single-line-block-comment": false,
-    "completed-docs": false
+    "completed-docs": false,
+    "no-reserved-keywords": false,
+    "no-default-export": false,
+    "no-any": false,
+    "no-backbone-get-set-outside-model": false,
+    "import-name": false
   }
 }

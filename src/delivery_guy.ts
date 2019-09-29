@@ -1,21 +1,22 @@
 import { ResponseError } from './response_error'
+import { Interceptors, Options} from './types/delivery_guy'
 
 class DeliveryGuy {
-  private readonly DEFAULT_GLOBAL_OPTIONS = {
+  private readonly DEFAULT_GLOBAL_OPTIONS: Options = {
     headers: {}
   }
 
-  private readonly DEFAULT_INTERCEPTORS = {
+  private readonly DEFAULT_INTERCEPTORS: Interceptors = {
     request: [],
     response: [],
     error: []
   }
 
-  private globalOptions = {
+  private globalOptions: Options = {
     ...this.DEFAULT_GLOBAL_OPTIONS
   }
 
-  private interceptors = {
+  private interceptors: Interceptors = {
     ...this.DEFAULT_INTERCEPTORS
   }
 
@@ -27,15 +28,42 @@ class DeliveryGuy {
     this.globalOptions = {
       ...this.DEFAULT_GLOBAL_OPTIONS
     }
+
     this.interceptors = {
-      request: [],
-      response: [],
-      error: []
+      ...this.DEFAULT_INTERCEPTORS
     }
   }
 
   public intercept(interceptor: string, action: Function) {
     this.interceptors[interceptor].push(action)
+  }
+
+  public async get(url: string): Promise<Response> {
+    return this.request(url)
+  }
+
+  public async post(url: string, payload: string | object): Promise<Response> {
+    return this.request(url, payload, { method: 'POST' })
+  }
+
+  public async put(url: string, payload: string | object): Promise<Response> {
+    return this.request(url, payload, { method: 'PUT' })
+  }
+
+  public async patch(url: string, payload: string | object): Promise<Response> {
+    return this.request(url, payload, { method: 'PATCH' })
+  }
+
+  public async delete(url: string): Promise<Response> {
+    return this.request(url, undefined, { method: 'DELETE' })
+  }
+
+  public async head(url: string): Promise<Response> {
+    return this.request(url, undefined, { method: 'HEAD' })
+  }
+
+  public async options(url: string): Promise<Response> {
+    return this.request(url, undefined, { method: 'OPTIONS' })
   }
 
   private callInterceptorActions(interceptor: string, url: string, payload: RequestInit | Response) {
@@ -77,8 +105,8 @@ class DeliveryGuy {
 
   private createConfig(payload?: string | object, userConfig?: RequestInit): RequestInit {
     const globalOptions = { ...this.globalOptions }
-    let headers = globalOptions.headers || {}
-    let body = null
+    const headers = globalOptions.headers || {}
+    let body: any
 
     if (payload && typeof payload === 'object') {
       body = JSON.stringify(payload)
@@ -110,34 +138,6 @@ class DeliveryGuy {
     } catch(exception) {
       return responseText
     }
-  }
-
-  public async get(url: string): Promise<Response> {
-    return this.request(url)
-  }
-
-  public async post(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'POST' })
-  }
-
-  public async put(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'PUT' })
-  }
-
-  public async patch(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'PATCH' })
-  }
-
-  public async delete(url: string): Promise<Response> {
-    return this.request(url, null, { method: 'DELETE' })
-  }
-
-  public async head(url: string): Promise<Response> {
-    return this.request(url, null, { method: 'HEAD' })
-  }
-
-  public async options(url: string): Promise<Response> {
-    return this.request(url, null, { method: 'OPTIONS' })
   }
 }
 
