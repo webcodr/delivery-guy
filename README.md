@@ -56,7 +56,7 @@ All Fetch API options are supported.
 ~~~ javascript
 import DeliveryGuy from 'delivery-guy'
 
-const items = await DeliveryGuy.get('/api/items', {'user-agent': 'Mozilla 5.0/Foo Bar'})
+const items = await DeliveryGuy.get('/api/items', { headers: {'user-agent': 'Mozilla 5.0/Foo Bar'} })
 console.log(items)
 ~~~
 

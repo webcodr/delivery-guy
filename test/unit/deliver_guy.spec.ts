@@ -50,6 +50,35 @@ describe('DeliveryGuy', () => {
     })
   })
 
+  describe('options', () => {
+    it('does apply a header', async () => {
+      const url = '/foo'
+      const userAgent = 'Mozilla/5.0 FOO!'
+      const mockData = { foo: 'bar' }
+
+      fetchMock.get((input: any, init: any) => {
+        return input === url && init.headers['user-agent'] === userAgent
+      }, mockData)
+
+      const response = await DeliveryGuy.get(url, { headers: { 'user-agent': userAgent } })
+
+      expect(response).toEqual(mockData)
+    })
+
+    it('does apply credentials settings', async () => {
+      const url = '/foo'
+      const mockData = { foo: 'bar' }
+
+      fetchMock.get((input: any, init: any) => {
+        return input === url && init.credentials === 'same-origin'
+      }, mockData)
+
+      const response = await DeliveryGuy.get(url, { credentials: 'same-origin'} )
+
+      expect(response).toEqual(mockData)
+    })
+  })
+
   describe('global options', () => {
     it('does apply a global header', async () => {
       const url = '/foo'

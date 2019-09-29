@@ -38,32 +38,62 @@ class DeliveryGuy {
     this.interceptors[interceptor].push(action)
   }
 
-  public async get(url: string): Promise<Response> {
-    return this.request(url)
+  public async get(url: string, userConfig: RequestInit = {}): Promise<Response> {
+    return this.request(url, undefined, userConfig)
   }
 
-  public async post(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'POST' })
+  public async post(url: string, payload: string | object, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'POST'
+    }
+
+    return this.request(url, payload, config)
   }
 
-  public async put(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'PUT' })
+  public async put(url: string, payload: string | object, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'PUT'
+    }
+
+    return this.request(url, payload, config)
   }
 
-  public async patch(url: string, payload: string | object): Promise<Response> {
-    return this.request(url, payload, { method: 'PATCH' })
+  public async patch(url: string, payload: string | object, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'PATCH'
+    }
+
+    return this.request(url, payload, config)
   }
 
-  public async delete(url: string): Promise<Response> {
-    return this.request(url, undefined, { method: 'DELETE' })
+  public async delete(url: string, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'DELETE'
+    }
+
+    return this.request(url, undefined, config)
   }
 
-  public async head(url: string): Promise<Response> {
-    return this.request(url, undefined, { method: 'HEAD' })
+  public async head(url: string, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'HEAD'
+    }
+
+    return this.request(url, undefined, config)
   }
 
-  public async options(url: string): Promise<Response> {
-    return this.request(url, undefined, { method: 'OPTIONS' })
+  public async options(url: string, userConfig: RequestInit = {}): Promise<Response> {
+    const config = {
+      ...userConfig,
+      method: 'OPTIONS'
+    }
+
+    return this.request(url, undefined, config)
   }
 
   private callInterceptorActions(interceptor: string, url: string, payload: RequestInit | Response) {
@@ -116,10 +146,10 @@ class DeliveryGuy {
     }
 
     return {
+      headers,
       ...globalOptions,
       ...userConfig,
-      body,
-      headers
+      body
     }
   }
 
