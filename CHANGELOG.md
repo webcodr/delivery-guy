@@ -1,6 +1,12 @@
 # Changelog
 
-## 7.0.0
+## 7.0.0-alpha2
+
+### Bug Fixes
+
+- Fix options merging (#6)
+
+## 7.0.0-alpha
 
 ### Breaking Changes
 
