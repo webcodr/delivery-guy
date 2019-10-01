@@ -19,10 +19,8 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "Releasing $VERSION ..."
 
-  yarn lint
-  yarn flow
   yarn test
-  yarn dist
+  yarn build
 
   # tag version
   npm version "$VERSION" --message "build: release $VERSION" --no-git-tag-version
