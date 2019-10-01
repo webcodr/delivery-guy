@@ -6,18 +6,18 @@ declare class DeliveryGuy {
   addGlobalOption(name: string, value: any): void;
   reset(): void;
   intercept(interceptor: string, action: Function): void;
+  get(url: string, userConfig: RequestInit): Promise<Response>;
+  post(url: string, payload: string | object, userConfig: RequestInit): Promise<Response>;
+  put(url: string, payload: string | object, userConfig: RequestInit): Promise<Response>;
+  patch(url: string, payload: string | object, userConfig: RequestInit): Promise<Response>;
+  delete(url: string, userConfig: RequestInit): Promise<Response>;
+  head(url: string, userConfig: RequestInit): Promise<Response>;
+  options(url: string, userConfig: RequestInit): Promise<Response>;
   private callInterceptorActions;
   private checkResponse;
   private createInterceptorPromise;
   private createConfig;
   private request;
-  get(url: string): Promise<Response>;
-  post(url: string, payload: string | object): Promise<Response>;
-  put(url: string, payload: string | object): Promise<Response>;
-  patch(url: string, payload: string | object): Promise<Response>;
-  delete(url: string): Promise<Response>;
-  head(url: string): Promise<Response>;
-  options(url: string): Promise<Response>;
 }
 
 export declare class ResponseError extends Error {
