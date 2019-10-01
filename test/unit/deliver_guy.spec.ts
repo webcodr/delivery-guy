@@ -5,7 +5,6 @@ import DeliveryGuy from '../../src/delivery_guy'
 describe('DeliveryGuy', () => {
   afterEach(() => {
     fetchMock.restore()
-    DeliveryGuy.reset()
   })
 
   describe('get()', () => {
@@ -126,8 +125,24 @@ describe('DeliveryGuy', () => {
     })
   })
 
+  describe('error handling', () => {
+    it('should throw an error', async () => {
+      fetchMock.get('/foo', {
+        body: {},
+        status: 400
+      })
 
-  describe('options', () => {
+      try {
+        await DeliveryGuy.get('/foo')
+      } catch(e) {
+        expect(e).toBeInstanceOf(Error)
+        expect(e.response).toBeTruthy()
+        expect(e.response.status).toEqual(400)
+      }
+    })
+  })
+
+  describe('set options', () => {
     it('does apply a header', async () => {
       const url = '/foo'
       const userAgent = 'Mozilla/5.0 FOO!'
@@ -150,23 +165,33 @@ describe('DeliveryGuy', () => {
         return input === url && init.credentials === 'same-origin'
       }, mockData)
 
-      const response = await DeliveryGuy.get(url, { credentials: 'same-origin'} )
+      const response = await DeliveryGuy.get(url, { credentials: 'same-origin' })
 
       expect(response).toEqual(mockData)
     })
   })
 
-  describe('global options', () => {
+  describe('set global options', () => {
+    beforeAll(() => {
+      DeliveryGuy.reset()
+    })
+
+    afterAll(() => {
+      DeliveryGuy.reset()
+    })
+
+    const userAgent = 'Mozilla/5.0 FOO!'
+    const url = '/foo'
+    const mockData = { foo: 'bar' }
+
     it('does apply a global header', async () => {
-      const url = '/foo'
-      const userAgent = 'Mozilla/5.0 FOO!'
-      const mockData = { foo: 'bar' }
+
 
       fetchMock.get((input: any, init: any) => {
         return input === url && init.headers['user-agent'] === userAgent
       }, mockData)
 
-      DeliveryGuy.addGlobalOption('headers', {'user-agent': userAgent})
+      DeliveryGuy.addGlobalOption('headers', { 'user-agent': userAgent })
 
       const response = await DeliveryGuy.get(url)
 
@@ -174,11 +199,8 @@ describe('DeliveryGuy', () => {
     })
 
     it('does apply global credentials settings', async () => {
-      const url = '/foo'
-      const mockData = { foo: 'bar' }
-
       fetchMock.get((input: any, init: any) => {
-        return input === url && init.credentials === 'same-origin'
+        return input === url && init.credentials === 'same-origin' && init.headers['user-agent'] === userAgent
       }, mockData)
 
       DeliveryGuy.addGlobalOption('credentials', 'same-origin')
@@ -189,7 +211,7 @@ describe('DeliveryGuy', () => {
     })
   })
 
-  describe('interceptors', () => {
+  describe('set interceptors', () => {
     it('should call interceptors', async () => {
       const url = '/foo'
       const requestInterceptor = jest.fn()
