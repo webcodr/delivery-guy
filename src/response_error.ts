@@ -1,13 +1,11 @@
-// @flow
-
-const getErrorMessage = function(response: Response): string {
+const getErrorMessage = (response: Response): string => {
   return `The request to ${response.url} failed with HTTP ${response.status}: ${
     response.statusText
-  }`
+    }`
 }
 
-export default class ResponseError extends Error {
-  response: Response
+export class ResponseError extends Error {
+  public response: Response
 
   constructor(response: Response) {
     super(getErrorMessage(response))

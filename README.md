@@ -1,80 +1,94 @@
 # Delivery Guy
 
 [![Build Status](https://travis-ci.org/WebCodr/delivery-guy.svg?branch=master)](https://travis-ci.org/WebCodr/delivery-guy)
-[![Coverage Status](https://coveralls.io/repos/github/WebCodr/delivery-guy/badge.svg?branch=master)](https://coveralls.io/github/WebCodr/delivery-guy?branch=master)
-[![BCH compliance](https://bettercodehub.com/edge/badge/WebCodr/delivery-guy?branch=master)](https://bettercodehub.com/)
 [![npm version](https://badge.fury.io/js/delivery-guy.svg)](https://github.com/WebCodr/delivery-guy)
 
 A simple Fetch API wrapper for HTTP error handling
 
-## Things you need to know
+## Version 7
 
-- The parameters of `deliver()` and `deliverJson()` are identical to `fetch()` and will be passed to it.
+DeliveryGuy 7 is a complete rewrite in TypeScript. It features a new, consistent API and features
+like support for all HTTP methods and fully automated JSON handling for requests and responses.
 
-- HTTP errors will throw a `ResponseError` error that allows you to access the response object of `fetch()` with `.response` and the response body with `.body`, which will parse JSON if it's present.
+## Examples
 
-## Example
+### GET
 
 ~~~ javascript
-import { DeliveryGuy, deliver, deliverJson, deliverPostJson } from 'delivery-guy'
+import DeliveryGuy from 'delivery-guy'
 
-let items = []
-let itemsText = null
+const items = await DeliveryGuy.get('/api/items')
+console.log(items)
+~~~
 
-// Set a global request option applied to every request
-DeliveryGuy.addRequestOption('header', { 'user-agent': userAgent })
+If `/api/items` would return JSON, DeliveryGuy will automatically parse it into an object
+with `JSON.parse()`.
 
-// Return parsed JSON directly
-const getItemsJson = async () => {
-  try {
-    const items = await deliverJson('/api/items')
-  } catch (e) {
-    console.error(e.message)
-    console.log('HTTP Status', e.response.status)
-    const responseBody = await e.response.json()
-    console.log('Response Body'. responseBody)
-  }
-}
+### POST
 
-// Return Fetch API response object
-const getItemsText = async () => {
-  try {
-    const response = await deliver('/api/items')
-    itemsText = await response.text()
-  } catch (e) {
-    console.error(e.message)
-    console.log('HTTP Status', e.response.status)
-    const responseBody = await e.response.json()
-    console.log('Response Body'. responseBody)
-  }
-}
+~~~ javascript
+import DeliveryGuy from 'delivery-guy'
 
-// Add interceptor for DeliveryGuy requests
-DeliveryGuy.intercept('request', (input) => { console.log('started request with', input)})
-const getItemsText = async () => {
-  try {
-    const response = await deliver('/api/items')
-    itemsText = await response.text()
-  } catch (e) {
-    console.error(e.message)
-    console.log('HTTP Status', e.response.status)
-    const responseBody = await e.response.json()
-    console.log('Response Body'. responseBody)
-  }
-}
-// Console output: "started request with: '/api/items'"
+const response = await DeliveryGuy.post('/api/item', {id: 1, foo: 'bar'})
+console.log(response)
+~~~
 
-// POST request with JSON response
-const addNewItem = async (name) => {
-  try {
-    const payload = { name: name }
-    const newItemResponse = await deliverPostJson('/api/item', payload)
-  } catch (e) {
-    console.error(e.message)
-    console.log('HTTP Status', e.response.status)
-    const responseBody = await e.response.json()
-    console.log('Response Body'. responseBody)
-  }
-}
+The automatic JSON handling works for payloads as well. If DeliveryGuy receives an object as payload
+it will automatically use `JSON.stringify()` on the object and set the content type to
+`application/json`.
 
+### Other HTTP methods
+
+~~~ javascript
+import DeliveryGuy from 'delivery-guy'
+
+await DeliveryGuy.put('/api/item', {id: 1, foo: 'bar'})
+await DeliveryGuy.patch('/api/item', {id: 1, foo: 'bar'})
+await DeliveryGuy.delete('/api/items')
+await DeliveryGuy.head('/api/items')
+await DeliveryGuy.options('/api/items')
+~~~
+
+### Options
+
+All Fetch API options are supported.
+
+~~~ javascript
+import DeliveryGuy from 'delivery-guy'
+
+const items = await DeliveryGuy.get('/api/items', { headers: {'user-agent': 'Mozilla 5.0/Foo Bar'} })
+console.log(items)
+~~~
+
+### Global options
+
+Global options will be applied to all requests. As as with per-request options, all Fetch API options
+are supported.
+
+~~~ javascript
+import DeliveryGuy from 'delivery-guy'
+
+DeliveryGuy.addGlobalOption('headers', {'user-agent': 'Mozilla 5.0/Foo Bar'})
+~~~
+
+### Interceptors
+
+You can define global interceptors for requests, responses and errors. Multiple interceptors per
+type are supported. Callback functions will be injected with the Fetch API input (URLs mostly) and
+the payload.
+
+~~~ javascript
+import DeliveryGuy from 'delivery-guy'
+
+DeliveryGuy.intercept('request', (url, payload) => {
+  console.log(url, payload)
+})
+
+DeliveryGuy.intercept('response', (url, payload) => {
+  console.log(url, payload)
+})
+
+DeliveryGuy.intercept('error', (url, payload) => {
+  console.log(url, payload)
+})
 ~~~

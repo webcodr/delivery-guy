@@ -1,11 +1,20 @@
 module.exports = {
-  moduleFileExtensions: ['js', 'json'],
+  testEnvironment: 'node',
   transform: {
-    '^.+\\.js?$': 'babel-jest'
+    "^.+\\.tsx?$": "ts-jest"
   },
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
-  },
-  testMatch: ['<rootDir>/test/unit/**/*.spec.js'],
-  notify: false
+  moduleFileExtensions: [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json",
+    "node",
+  ],
+  testMatch: ['**/test/unit/**/*.spec.(js|jsx|ts|tsx)'],
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/*.d.ts',
+  ],
 }
