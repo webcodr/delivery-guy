@@ -1,6 +1,6 @@
 // tslint:disable-next-line
-import * as fetchMock from 'fetch-mock'
-import * as DeliveryGuy from '../dist/main'
+const DeliveryGuy = require('../dist/main')
+const fetchMock = require('fetch-mock')
 
 describe('DevliveryGuy', () => {
   describe('get()', () => {

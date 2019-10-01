@@ -57,6 +57,7 @@
     "email": "david@webcodr.io"
   },
   "dependencies": {
+    "deepmerge": "^4.0.0",
     "tslib": "^1.10.0"
   }
 }

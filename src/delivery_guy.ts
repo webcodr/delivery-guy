@@ -1,5 +1,6 @@
 import { ResponseError } from './response_error'
 import { Interceptors, Options } from './types/delivery_guy'
+const deepmerge = require('deepmerge')
 
 class DeliveryGuy {
   private readonly DEFAULT_GLOBAL_OPTIONS: Options = {
@@ -138,22 +139,22 @@ class DeliveryGuy {
 
   private createConfig(payload?: string | object, userConfig?: RequestInit): RequestInit {
     const globalOptions = { ...this.globalOptions }
-    const headers = globalOptions.hasOwnProperty('headers') ? globalOptions.headers : {}
     let body: string | object
 
     if (typeof payload === 'object') {
       body = JSON.stringify(payload)
-      headers['content-type'] = 'application/json'
+      globalOptions.headers['content-type'] = 'application/json'
     } else {
       body = payload
     }
 
-    return {
-      headers,
-      ...globalOptions,
-      ...userConfig,
-      body
-    }
+    const options = [
+      globalOptions,
+      userConfig,
+      { body }
+    ]
+
+    return deepmerge.all(options)
   }
 
   private async request(url: string, payload?: string | object, userConfig?: RequestInit) {

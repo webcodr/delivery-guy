@@ -26,6 +26,8 @@
     "no-any": false,
     "no-backbone-get-set-outside-model": false,
     "import-name": false,
-    "allow-undefined-union": false
+    "allow-undefined-union": false,
+    "no-require-imports": false,
+    "no-var-requires": false
   }
 }

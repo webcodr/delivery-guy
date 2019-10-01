@@ -1,6 +1,6 @@
 // tslint:disable-next-line
-import * as fetchMock from 'fetch-mock'
 import DeliveryGuy from '../../src/delivery_guy'
+const fetchMock = require('fetch-mock')
 
 describe('DeliveryGuy', () => {
   afterEach(() => {
@@ -153,6 +153,23 @@ describe('DeliveryGuy', () => {
       }, mockData)
 
       const response = await DeliveryGuy.get(url, { headers: { 'user-agent': userAgent } })
+
+      expect(response).toEqual(mockData)
+    })
+
+    it('does merge header correctly', async () => {
+      const url = '/foo'
+      const userAgent = 'Mozilla/5.0 FOO!'
+      const payload = { bar: 'foo' }
+      const mockData = { foo: 'bar' }
+
+      fetchMock.post((input: any, init: any) => {
+        return input === url
+        && init.headers['user-agent'] === userAgent
+        && init.headers['content-type'] === 'application/json'
+      }, mockData)
+
+      const response = await DeliveryGuy.post(url, payload, { headers: { 'user-agent': userAgent } })
 
       expect(response).toEqual(mockData)
     })
