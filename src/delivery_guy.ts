@@ -1,5 +1,5 @@
 import { ResponseError } from './response_error'
-import { Interceptors, Options} from './types/delivery_guy'
+import { Interceptors, Options } from './types/delivery_guy'
 
 class DeliveryGuy {
   private readonly DEFAULT_GLOBAL_OPTIONS: Options = {
@@ -35,7 +35,9 @@ class DeliveryGuy {
   }
 
   public intercept(interceptor: string, action: Function) {
-    this.interceptors[interceptor].push(action)
+    if (this.interceptors.hasOwnProperty(interceptor)) {
+      this.interceptors[interceptor].push(action)
+    }
   }
 
   public async get(url: string, userConfig: RequestInit = {}): Promise<Response> {
@@ -97,9 +99,10 @@ class DeliveryGuy {
   }
 
   private callInterceptorActions(interceptor: string, url: string, payload: RequestInit | Response) {
-    const actions = this.interceptors[interceptor] || []
+    if (typeof this.interceptors[interceptor] === 'object'
+      && this.interceptors[interceptor].length > 0) {
+      const actions: Function[] = this.interceptors[interceptor]
 
-    if (actions.length > 0) {
       for (const action of actions) {
         action(url, payload)
       }
@@ -135,10 +138,10 @@ class DeliveryGuy {
 
   private createConfig(payload?: string | object, userConfig?: RequestInit): RequestInit {
     const globalOptions = { ...this.globalOptions }
-    const headers = globalOptions.headers || {}
-    let body: any
+    const headers = globalOptions.hasOwnProperty('headers') ? globalOptions.headers : {}
+    let body: string | object
 
-    if (payload && typeof payload === 'object') {
+    if (typeof payload === 'object') {
       body = JSON.stringify(payload)
       headers['content-type'] = 'application/json'
     } else {
@@ -165,7 +168,7 @@ class DeliveryGuy {
     try {
       return JSON.parse(responseText)
 
-    } catch(exception) {
+    } catch (exception) {
       return responseText
     }
   }
