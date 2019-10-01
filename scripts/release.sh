@@ -23,7 +23,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   yarn build
 
   # tag version
-  npm version "$VERSION" --message "build: release $VERSION" --no-git-tag-version
+  npm version "$VERSION" --message "build: release $VERSION" --no-git-tag-version --allow-same-version
 
   # commit
   git add -A
