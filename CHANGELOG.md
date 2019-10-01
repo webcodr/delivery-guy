@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.0
+
+### Breaking Changes
+
+- Complete rewrite and new API, see README file
+
 ## 6.0.0
 
 ### Breaking Changes
