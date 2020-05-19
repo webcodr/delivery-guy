@@ -28,6 +28,7 @@
     "import-name": false,
     "allow-undefined-union": false,
     "no-require-imports": false,
-    "no-var-requires": false
+    "no-var-requires": false,
+    "no-unsafe-any": false
   }
 }
